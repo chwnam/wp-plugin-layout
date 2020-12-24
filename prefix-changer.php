@@ -104,7 +104,7 @@ foreach ( $iterator as $it ) {
 	}
 }
 
-rename( __DIR__ . '/wp-plugin-layout.php', __DIR__ . strtolower( $prefix ) . '.php' );
+rename( __DIR__ . '/wp-plugin-layout.php', __DIR__ . $sep . strtolower( $prefix ) . '.php' );
 
 // finish.
 touch( $touch_file );
