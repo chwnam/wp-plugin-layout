@@ -81,7 +81,7 @@ if ( ! class_exists( 'WPPL_Shortcode_Handler' ) ) {
 			$objects = [
 			];
 
-			return apply_filters( 'wppl_shortcode_objects', $objects );
+			return apply_filters( 'wppl_shortcode_objects', wppl_get_objects( 'shortcode' ) );
 		}
 	}
 }

@@ -52,31 +52,7 @@ if ( ! class_exists( 'WPPL_Script_Handler' ) ) {
 			);
 		}
 
-		private function get_global_scripts(): array {
-			$scripts = [
-				// Instantiate globally used WPPL_Script objects.
-			];
-
-			return apply_filters( 'wppl_global_scripts', $scripts );
-		}
-
-		private function get_admin_scripts(): array {
-			$scripts = [
-				// Instantiate WPPL_Script objects for admin.
-			];
-
-			return apply_filters( 'get_admin_scripts', $scripts );
-		}
-
-		private function get_front_scripts(): array {
-			$scripts = [
-				// Instantiate WPPL_Script objects for frontend.
-			];
-
-			return apply_filters( 'get_front_scripts', $scripts );
-		}
-
-		private function url_helper( string $relpath ): string {
+		public function url_helper( string $relpath ): string {
 			$relpath = trim( $relpath, '/\\' );
 
 			if ( $this->is_debug ) {
@@ -84,6 +60,27 @@ if ( ! class_exists( 'WPPL_Script_Handler' ) ) {
 			}
 
 			return "{$this->asset_url}{$relpath}";
+		}
+
+		private function get_global_scripts(): array {
+			return apply_filters( 'wppl_global_scripts', wppl_get_objects( 'global-script', $this->get_context() ) );
+		}
+
+		private function get_admin_scripts(): array {
+			return apply_filters( 'get_admin_scripts', wppl_get_objects( 'admin-script', $this->get_context() ) );
+		}
+
+		private function get_front_scripts(): array {
+			return apply_filters( 'get_front_scripts', wppl_get_objects( 'front-script', $this->get_context() ) );
+		}
+
+		private function get_context(): array {
+			return [
+				'asset_url'  => $this->asset_url,
+				'asset_path' => $this->asset_path,
+				'asset_ver'  => $this->asset_ver,
+				'url_helper' => [ $this, 'url_helper' ],
+			];
 		}
 	}
 }

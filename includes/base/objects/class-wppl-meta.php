@@ -11,14 +11,14 @@ if ( ! class_exists( 'WPPL_Meta' ) ) {
 	 *
 	 * Meta field wrapper class.
 	 *
-	 * @property-read string        $object_subtype
-	 * @property-read string        $type
-	 * @property-read string        $description
-	 * @property-read mixed         $default
-	 * @property-read bool          $single
-	 * @property-read callable|null $sanitize_callback
-	 * @property-read callable|null $auth_callback
-	 * @property-read bool          $show_in_rest
+	 * @property-read string    $object_subtype
+	 * @property-read string    $type
+	 * @property-read string    $description
+	 * @property-read mixed     $default
+	 * @property-read bool      $single
+	 * @property-read ?callable $sanitize_callback
+	 * @property-read ?callable $auth_callback
+	 * @property-read bool      $show_in_rest
 	 */
 	class WPPL_Meta implements WPPL_Object {
 		private static array $meta = [];
@@ -70,6 +70,12 @@ if ( ! class_exists( 'WPPL_Meta' ) ) {
 
 		public function register() {
 			if ( $this->object_type && $this->object_subtype ) {
+				if ( isset( $this->args['sanitize_callback'] ) ) {
+					$this->args['sanitize_callback'] = wppl_parse_callback( $this->args['sanitize_callback'] );
+				}
+				if ( isset( $this->args['auth_callback'] ) ) {
+					$this->args['auth_callback'] = wppl_parse_callback( $this->args['auth_callback'] );
+				}
 				register_meta( $this->object_type, $this->meta_key, $this->args );
 			}
 		}

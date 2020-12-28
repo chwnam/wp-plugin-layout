@@ -59,6 +59,9 @@ if ( ! class_exists( 'WPPL_Option' ) ) {
 		 */
 		public function register() {
 			if ( $this->option_group && $this->option_name ) {
+				if ( $this->args['sanitize_callback'] ) {
+					$this->args['sanitize_callback'] = wppl_parse_callback( $this->args['sanitize_callback'] );
+				}
 				register_setting( $this->option_group, $this->option_name, $this->args );
 			}
 		}

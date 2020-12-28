@@ -49,17 +49,7 @@ if ( ! class_exists( 'WPPL_Meta_Handler' ) ) {
 		 * @return WPPL_Meta[]
 		 */
 		public function get_objects(): array {
-			$objects = [
-				// NOTE: a non-numeric key is considerd as an alias. You can utilize the alias string.
-				//
-				// e.g.
-				// 'foo' => new WPPL_Meta( 'post', 'prefix_foo', [ ... ] ),
-				//
-				// And then,
-				// $foo_field = wppl()->handler->meta->foo;
-			];
-
-			return apply_filters( 'wppl_meta_objects', $objects );
+			return apply_filters( 'wppl_meta_objects', wppl_get_objects( 'meta' ) );
 		}
 
 		/**

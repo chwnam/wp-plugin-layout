@@ -40,15 +40,7 @@ if ( ! class_exists( 'WPPL_Option_Handler' ) ) {
 		 * @return WPPL_Option[]
 		 */
 		public function get_objects(): array {
-			$objects = [
-				// NOTE: a non-numeric key is considerd as an alias. You can utilize the alias string.
-				// e.g.
-				//   'foo' => new WPPL_Option( 'foo_group', 'prefix_foo', [ ... ] );
-				// then,
-				//   $foo_field = wppl()->handler->option->foo;
-			];
-
-			return apply_filters( 'wppl_option_objects', $objects );
+			return apply_filters( 'wppl_option_objects', wppl_get_objects( 'option' ) );
 		}
 
 		/**

@@ -21,9 +21,6 @@ if ( ! class_exists( 'WPPL_Cron_Handler' ) ) {
 			$this
 				->action( 'anime_activation', 'activation_setup' )
 				->action( 'anime_deactivation', 'deactivation_cleanup' );
-
-			// To add new interval, uncomment this.
-			// $this->filter( 'cron_schedule', 'add_schedule' );
 		}
 
 		public function register_objects(): void {
@@ -46,24 +43,7 @@ if ( ! class_exists( 'WPPL_Cron_Handler' ) ) {
 		 * @return WPPL_Cron[]
 		 */
 		public function get_objects(): array {
-			$objects = [
-			];
-
-			return apply_filters( 'wppl_cron_objects', $objects );
-		}
-
-		/**
-		 * @callback
-		 * @filter    cron_schedule
-		 *
-		 * @param array $schedules The array has two keys: interval, display.
-		 *
-		 * @return array
-		 *
-		 * @see       wp_get_schedules()
-		 */
-		public function add_schedule( array $schedules ): array {
-			return $schedules;
+			return apply_filters( 'wppl_cron_objects', wppl_get_objects( 'cron' ) );
 		}
 
 		/**

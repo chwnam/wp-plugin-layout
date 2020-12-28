@@ -6,13 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 if ( ! class_exists( 'WPPL_Container' ) ) {
-	/**
-	 * Class WPPL_Container
-	 *
-	 * @property-read WPPL_Admin    $admin
-	 * @property-read WPPL_Handlers $handler
-	 * @property-read WPPL_Settings $setting
-	 */
 	final class WPPL_Container implements WPPL_Container_Interface, WPPL_Module {
 		use WPPL_Submodule_Impl;
 		use WPPL_Hooks_Impl;
@@ -208,14 +201,7 @@ if ( ! class_exists( 'WPPL_Container' ) ) {
 		 * Load all submodules.
 		 */
 		private function load_submodules() {
-			$this->init_submodules(
-				[
-					// Define modules
-					'admin'   => new WPPL_Admin(),
-					'handler' => new WPPL_Handlers(),
-					'setting' => new WPPL_Settings(),
-				]
-			);
+			$this->init_submodules( wppl_get_submodules( 'root' ) );
 
 			// Trigger all submodule initialization.
 			do_action( 'wppl_module_loaded' );

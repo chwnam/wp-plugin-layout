@@ -38,10 +38,7 @@ if ( ! class_exists( 'WPPL_Block_Handler' ) ) {
 		 * @return WPPL_Block[]
 		 */
 		public function get_objects(): array {
-			$objects = [
-			];
-
-			return apply_filters( 'wppl_block_objects', $objects );
+			return apply_filters( 'wppl_block_objects', wppl_get_objects( 'block' ) );
 		}
 	}
 }

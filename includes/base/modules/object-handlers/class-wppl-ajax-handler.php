@@ -39,11 +39,7 @@ if ( ! class_exists( 'WPPL_Ajax_Handler' ) ) {
 		 * @return WPPL_Ajax[]
 		 */
 		public function get_objects(): array {
-			$objects = [
-				// Define ajax handler objects here.
-			];
-
-			return apply_filters( 'wppl_ajax_objects', $objects );
+			return apply_filters( 'wppl_ajax_objects', wppl_get_objects( 'ajax' ) );
 		}
 	}
 }

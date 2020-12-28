@@ -52,31 +52,7 @@ if ( ! class_exists( 'WPPL_Style_Handler' ) ) {
 			);
 		}
 
-		private function get_global_styles(): array {
-			$styles = [
-				// Instantiate globally used WPPL_Style objects.
-			];
-
-			return apply_filters( 'get_global_styles', $styles );
-		}
-
-		private function get_admin_styles(): array {
-			$styles = [
-				// Instantiate WPPL_Style objects for admin.
-			];
-
-			return apply_filters( 'get_admin_styles', $styles );
-		}
-
-		private function get_front_styles(): array {
-			$styles = [
-				// Instantiate WPPL_Style objects for frontend.
-			];
-
-			return apply_filters( 'get_front_styles', $styles );
-		}
-
-		private function url_helper( string $relpath ): string {
+		public function url_helper( string $relpath ): string {
 			$relpath = trim( $relpath, '/\\' );
 
 			if ( $this->is_debug ) {
@@ -84,6 +60,27 @@ if ( ! class_exists( 'WPPL_Style_Handler' ) ) {
 			}
 
 			return "{$this->asset_url}{$relpath}";
+		}
+
+		private function get_global_styles(): array {
+			return apply_filters( 'get_global_styles', wppl_get_objects( 'global-style', $this->get_context() ) );
+		}
+
+		private function get_admin_styles(): array {
+			return apply_filters( 'get_admin_styles', wppl_get_objects( 'admin-style', $this->get_context() ) );
+		}
+
+		private function get_front_styles(): array {
+			return apply_filters( 'get_front_styles', wppl_get_objects( 'front-style', $this->get_context() ) );
+		}
+
+		private function get_context(): array {
+			return [
+				'asset_url'  => $this->asset_url,
+				'asset_path' => $this->asset_path,
+				'asset_ver'  => $this->asset_ver,
+				'url_helper' => [ $this, 'url_helper' ],
+			];
 		}
 	}
 }
