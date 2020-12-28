@@ -203,7 +203,7 @@ if ( ! function_exists( 'wppl_parse_callback' ) ) {
 if ( ! function_exists( 'wppl_get_objects' ) ) {
 	function wppl_get_objects( string $object_name, array $context = [] ): array {
 		$objects = [];
-		$path    = plugin_dir_path( wppl()->get_main_file() ) . "objects/{$object_name}.php";
+		$path    = plugin_dir_path( wppl()->get_main_file() ) . "floor/objects/{$object_name}.php";
 
 		if ( file_exists( $path ) && is_file( $path ) && is_readable( $path ) ) {
 			if ( ! empty( $context ) ) {
@@ -224,11 +224,15 @@ if ( ! function_exists( 'wppl_get_objects' ) ) {
 
 
 if ( ! function_exists( 'wppl_get_submodules' ) ) {
-	function wppl_get_submodules( string $submodule_name ): array {
+	function wppl_get_submodules( string $submodule_name, array $context = [] ): array {
 		$submodules = [];
-		$path       = plugin_dir_path( wppl()->get_main_file() ) . "submodules/{$submodule_name}.php";
+		$path       = plugin_dir_path( wppl()->get_main_file() ) . "floor/modules/{$submodule_name}.php";
 
 		if ( file_exists( $path ) && is_file( $path ) && is_readable( $path ) ) {
+			if ( ! empty( $context ) ) {
+				extract( $context, EXTR_SKIP );
+			}
+
 			/** @noinspection PhpIncludeInspection */
 			$submodules = include $path;
 

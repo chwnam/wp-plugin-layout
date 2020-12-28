@@ -22,19 +22,23 @@ if ( file_exists( $touch_file ) ) {
 // input prefix
 do {
 	$prefix = readline( 'Enter prefix string: ' );
-	$match  = preg_match( '/^[A-Za-z0-9]+$/', $prefix );
+	$match  = preg_match( '/^[A-Za-z0-9_]+$/', $prefix );
 	if ( ! $match ) {
-		echo color_text( "Error! Invalid prefix. Prefix should contain A-Z, a-z, 0-9 only.\n", 'red' );
+		echo color_text( "Error! Invalid prefix. Prefix should contain A-Z, a-z, 0-9, and underscore only.\n", 'red' );
 	}
-	if ( 'wppl' === strtolower( $prefix ) ) {
-		echo color_text( "Error! prefix 'wppl' is not allowed. Chooose another prefix.\n", 'red' );
+	if ( false !== strpos( strtolower( $prefix ), 'wppl' ) ) {
+		echo color_text( "Error! string 'wppl' is included. Chooose another prefix.\n", 'red' );
 		$match = 0;
 	}
 } while ( ! $match );
 
+
+$prefix    = trim( $prefix, '_' );
+$lowercase = strtolower( $prefix );
+
 do {
 	echo color_text( sprintf( 'Replace all prefixe with \'%s\', and \'%s\'. Are you sure? [y, n] ', $prefix,
-	                          strtolower( $prefix ) ), 'red', '', 'bold' );
+	                          $lowercase ), 'red', '', 'bold' );
 	$answer = trim( strtolower( readline() ) );
 	if ( 'n' == $answer ) {
 		exit;
@@ -42,8 +46,9 @@ do {
 } while ( $answer !== 'y' );
 
 $targets = [
+	'/assets',
 	'/includes/base',
-	'/includes/submodules',
+	'/includes/floor',
 	'/wp-plugin-layout.php',
 ];
 
@@ -64,7 +69,7 @@ foreach ( $targets as $target ) {
 	}
 }
 
-rename( $root_path . $sep . 'wp-plugin-layout.php', $root_path . $sep . strtolower( $prefix ) . '.php' );
+rename( $root_path . $sep . 'wp-plugin-layout.php', $root_path . $sep . $lowercase . '.php' );
 
 // finish.
 touch( $touch_file );
