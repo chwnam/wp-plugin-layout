@@ -1,7 +1,7 @@
 {
   "name": "changwoo/wp-plugin-layout",
   "license": "GPL-2.0-or-later",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "type": "wordpress-plugin",
   "keywords": [
     "wordpress",
