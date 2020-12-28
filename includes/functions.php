@@ -183,8 +183,13 @@ if ( ! function_exists( 'wppl_parse_callback' ) ) {
 						break;
 					}
 				}
-				$callback = $cache[ $module_part ] =
-					( $module && method_exists( $module, $method ) ) ? [ $module, $method ] : false;
+				$cache[ $module_part ] = $module;
+
+				if ( $module && method_exists( $module, $method ) ) {
+					$callback = [ $module, $method ];
+				} else {
+					$callback = false;
+				}
 			}
 
 			return $callback;

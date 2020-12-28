@@ -19,7 +19,7 @@ if ( ! class_exists( 'WPPL_Script_Handler' ) ) {
 
 		public function init_module() {
 			$this->asset_url  = plugin_dir_url( wppl()->get_main_file() ) . 'assets/js/';
-			$this->asset_path = plugin_dir_path( wppl()->get_main_file() ) . 'asset/js/';
+			$this->asset_path = plugin_dir_path( wppl()->get_main_file() ) . 'assets/js/';
 			$this->asset_ver  = wppl()->get_version();
 			$this->is_debug   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 
